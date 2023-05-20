@@ -10,6 +10,8 @@ API를 활용하지 않은 관계로, html 소스코드가 수정되는 경우 �
 ```
 %appdata%\Mp3tag\data\sources\
 ```
+### 최신버전 링크
+<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/dh-json/Mp3tag-Melon-source">
 
 # 사용
 
