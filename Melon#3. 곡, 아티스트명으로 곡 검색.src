@@ -16,8 +16,8 @@
 # The output format is defined by IndexFormat above, which
 # is used by the selection dialog
 # ###################################################################
-debug "on" "debug_melon_parse.out"
-debugWriteInput "debug-input_melon_parse.out"
+#debug "on" "debug_melon_search_song.out"
+#debugWriteInput "debug-input_melon_search_song.out"
 
 FindLine "<tbody>"
 
@@ -85,8 +85,8 @@ While "<tr "
 # The current output variable is set via the outputto command
 # All these fields are used by the confirm online information dialog
 # ###################################################################
-#debug "on" "debug_melon_set2.out"
-#debugWriteInput "debug-input_melon_set2.out"
+#debug "on" "debug_melon_parse_song.out"
+#debugWriteInput "debug-input_melon_parse_song.out"
 
 # CoverArt
 OutputTo "coverurl"
@@ -157,37 +157,51 @@ endif
 # Lyricist
 OutputTo "Lyricist"
 FindLine "작사가 정보" 1 1
-FindLine "<li>" 1 1
-Do
-  FindLine "<div class=\"ellipsis artist" 1 1
-  FindLine "melon.link.goArtistDetail" 1 1
-  RegexpReplace "<[^>]+>" ""
-  SayRest
-  FindLine "</li>" 1 1
-  MoveLine 2 1 1
-  Unspace
+MoveLine 3 1 1
+Unspace
+If "<li"
+  Do
+    FindLine "<span class=\"type\">작사" 1 1
+    MoveLine -4 1 1
+    FindLine "<div class=\"ellipsis artist" 1 1
+    FindLine "melon.link.goArtistDetail" 1 1
+    RegexpReplace "<[^>]+>" ""
+    SayRest
+    FindLine "</li>" 1 1
+    MoveLine 2 1 1
+    Unspace
 
-  If "<li>"
-    Say ", "
-  endif
-While "<li>"
+    If "<li>"
+      Say ", "
+    endif
+  While "<li>"
+else
+  MoveLine -3 1 1
+endif
 
 # Composer
 OutputTo "Composer"
 FindLine "작곡가 정보" 1 1
-FindLine "<li>" 1 1
-Do
-  FindLine "<div class=\"ellipsis artist" 1 1
-  FindLine "melon.link.goArtistDetail" 1 1
-  RegexpReplace "<[^>]+>" ""
-  SayRest
-  FindLine "</li>" 1 1
-  MoveLine 2 1 1
-  Unspace
+MoveLine 3 1 1
+Unspace
+If "<li"
+  Do
+    FindLine "<span class=\"type\">작곡" 1 1
+    MoveLine -4 1 1
+    FindLine "<div class=\"ellipsis artist" 1 1
+    FindLine "melon.link.goArtistDetail" 1 1
+    RegexpReplace "<[^>]+>" ""
+    SayRest
+    FindLine "</li>" 1 1
+    MoveLine 2 1 1
+    Unspace
 
-  If "<li>"
-    Say ", "
-  endif
-While "<li>"
+    If "<li>"
+      Say ", "
+    endif
+  While "<li>"
+else
+  MoveLine -3 1 1
+endif
 
-Set "Unplayble" ""
+Set "Unplayble"
