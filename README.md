@@ -76,4 +76,4 @@ SayRest
 # 참고 사항
 [Tag Sources - Mp3tag Documentation](https://docs.mp3tag.de/tag-sources/development/)
 
-[Mp3tag용 멜론 태그 검색 스크립트](https://m.blog.naver.com/hosang46/221126952898)
+[Mp3tag용 멜론 태그 검색 스크립트](https://blog.naver.com/hosang46/221126952898)
