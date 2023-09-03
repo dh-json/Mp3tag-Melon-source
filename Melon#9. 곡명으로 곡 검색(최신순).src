@@ -3,10 +3,10 @@
 # Originated by Hyosang Park http://hyosang.kr
 
 [Include]=Melon#.inc
-[IndexUrl]=https://www.melon.com/search/song/index.htm?section=song&sort%5D=date&q=
+[IndexUrl]=https://www.melon.com/search/song/index.htm?&section=song&searchGnbYn=Y&kkoSpl=N&kkoDpType=&sort=date&q=
 [AlbumUrl]=https://www.melon.com/song/detail.htm?songId=
 [IndexFormat]=%_url%|%Title%|%Artist%|%_preview%|%Album%
-[SearchBy]=%Title%
+[SearchBy]=Title||%title%||%s
 
 [ParserScriptIndex]=...
 # ###################################################################
@@ -157,18 +157,18 @@ endif
 # Lyricist
 OutputTo "Lyricist"
 FindLine "작사가 정보" 1 1
-MoveLine 3 1 1
+MoveLine 3 1
 Unspace
 If "<li"
   Do
     FindLine "<span class=\"type\">작사" 1 1
-    MoveLine -4 1 1
+    MoveLine -4 1
     FindLine "<div class=\"ellipsis artist" 1 1
     FindLine "melon.link.goArtistDetail" 1 1
     RegexpReplace "<[^>]+>" ""
     SayRest
     FindLine "</li>" 1 1
-    MoveLine 2 1 1
+    MoveLine 2 1
     Unspace
 
     If "<li>"
@@ -176,24 +176,24 @@ If "<li"
     endif
   While "<li>"
 else
-  MoveLine -3 1 1
+  MoveLine -3 1
 endif
 
 # Composer
 OutputTo "Composer"
 FindLine "작곡가 정보" 1 1
-MoveLine 3 1 1
+MoveLine 3 1
 Unspace
 If "<li"
   Do
     FindLine "<span class=\"type\">작곡" 1 1
-    MoveLine -4 1 1
+    MoveLine -4 1
     FindLine "<div class=\"ellipsis artist" 1 1
     FindLine "melon.link.goArtistDetail" 1 1
     RegexpReplace "<[^>]+>" ""
     SayRest
     FindLine "</li>" 1 1
-    MoveLine 2 1 1
+    MoveLine 2 1
     Unspace
 
     If "<li>"
@@ -201,7 +201,7 @@ If "<li"
     endif
   While "<li>"
 else
-  MoveLine -3 1 1
+  MoveLine -3 1
 endif
 
 Set "Unplayble"
