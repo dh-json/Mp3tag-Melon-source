@@ -3,7 +3,7 @@
 # Originated by Hyosang Park http://hyosang.kr
 
 [Include]=Melon#.inc
-[IndexUrl]=https://www.melon.com/search/song/index.htm?&section=song&searchGnbYn=Y&kkoSpl=N&kkoDpType=&sort=ganada&q=
+[IndexUrl]=https://www.melon.com/search/song/index.htm?section=song&searchGnbYn=Y&kkoSpl=N&kkoDpType=&sort=ganada&q=
 [AlbumUrl]=https://www.melon.com/song/detail.htm?songId=
 [IndexFormat]=%_url%|%Title%|%Artist%|%_preview%|%Album%
 [SearchBy]=Title||%title%||%s

@@ -3,7 +3,7 @@
 # Originated by Hyosang Park http://hyosang.kr
 
 [Include]=Melon#.inc
-[IndexUrl]=https://www.melon.com/search/album/index.htm?section=&searchGnbYn=Y&kkoSpl=N&kkoDpType=&q=
+[IndexUrl]=https://www.melon.com/search/album/index.htm?section=all&searchGnbYn=Y&kkoSpl=N&kkoDpType=&q=
 [AlbumUrl]=https://www.melon.com/album/detail.htm?albumId=
 [IndexFormat]=%_url%|%_preview%|%Album%|%Artist%|%Title%|%Released%|%Tracks%
 [SearchBy]=Album||%album%||%s||Albumartist||%albumArtist%||+%s
