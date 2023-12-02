@@ -13,10 +13,9 @@
 # is used by the selection dialog
 # ###################################################################
 #debug "on" "debug_melon_search_album.txt"
-#debugWriteInput "debug-input_melon_search_album.txt"
+#debugWriteInput "debug-input_melon_search_album.html"
 
 FindLine "<li class=\"album11_li\""
-
 Do
   # _url
   FindLine "<dt"
@@ -82,7 +81,7 @@ While "<li class=\"album11_li\""
 # All these fields are used by the confirm online information dialog
 # ###################################################################
 #debug "on" "debug_melon_parse_album.txt"
-#debugWriteInput "debug-input_melon_parse_album.txt"
+#debugWriteInput "debug-input_melon_parse_album.html"
 
 # CoverArt
 FindLine "<meta property=\"og:image\""
@@ -115,21 +114,25 @@ SayRest
 FindLine "<dt>발매일</dt>"
 FindLine "<dd"
 Unspace
-OutputTo "Year"
-# Year
-RegexpReplace "<[^>]+>" ""
-SayUntil "."
-# Date
-#RegexpReplace "[^0-9]" ""
-#SayRest
+IfNot "-"
+  OutputTo "Year"
+  # Year
+  RegexpReplace "<[^>]+>" ""
+  SayUntil "."
+  # Date
+  #RegexpReplace "[^0-9]" ""
+  #SayRest
+endif
 
 # Publisher
 FindLine "<dt>발매사</dt>"
 FindLine "<dd"
 RegexpReplace "<[^>]+>" ""
 Unspace
-OutputTo "Publisher"
-SayRest
+IfNot "-"
+  OutputTo "Publisher"
+  SayRest
+endif
 
 FindLine "<tr data-group-items=\""
 Unspace
