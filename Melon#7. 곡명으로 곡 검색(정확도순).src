@@ -13,10 +13,9 @@
 # is used by the selection dialog
 # ###################################################################
 #debug "on" "debug_melon_search_song.txt"
-#debugWriteInput "debug-input_melon_search_song.txt"
+#debugWriteInput "debug-input_melon_search_song.html"
 
 FindLine "<tbody>"
-
 Do
   # _url
   FindLine "melon.link.goSongDetail"
@@ -69,120 +68,125 @@ While "<tr "
 # All these fields are used by the confirm online information dialog
 # ###################################################################
 #debug "on" "debug_melon_parse_song.txt"
-#debugWriteInput "debug-input_melon_parse_song.txt"
+#debugWriteInput "debug-input_melon_parse_song.html"
 
 # CoverArt
-OutputTo "coverurl"
 FindLine "<meta property=\"og:image\""
-Unspace
 
 # ChangeSize
 RegexpReplace "(_)(\d+)(.jpg+)" "_1000.jpg"
-RegexpReplace "(\w+\.\w+)\?.*" "$1"
+#RegexpReplace "(\w+\.\w+)\?.*" "$1"
+Unspace
 FindInLine "content=\""
+OutputTo "coverurl"
 SayUntil "\""
 
 # Title
-OutputTo "Title"
-FindLine "<strong class=\"none\">"
-MoveLine 5
+FindLine "<div id=\"conts"
+FindLine "song_name"
+JoinUntil "</div>"
+Replace "<strong class=\"none\">곡명</strong>" ""
+RegexpReplace "<[^>]+>" ""
 Unspace
+OutputTo "Title"
 SayRest
 
-# Artist
-OutputTo "Artist"
-FindLine "<div class=\""
-FindInLine "<div class=\""
-MoveLine 2
-Unspace
+# AlbumArtist/Multiple Artists/Various Artists
+FindLine "artist"
+JoinUntil "</div>"
 RegexpReplace "<[^>]+>" ""
+Unspace
+OutputTo "Artist"
 SayRest
 
 # Album
-OutputTo "Album"
-FindLine "<dt>앨범</dt>"
-MoveLine 1
-Unspace
+FindLine "goAlbumDetail"
 RegexpReplace "<[^>]+>" ""
+Unspace
+OutputTo "Album"
 SayRest
 
-OutputTo "Year"
 FindLine "<dt>발매일</dt>"
-MoveLine 1
+FindLine "<dd"
 Unspace
-# Year
-RegexpReplace "<[^>]+>" ""
-SayUntil "."
-# Date
-#RegexpReplace "[^0-9]" ""
-#SayRest
+IfNot "-"
+  OutputTo "Year"
+  # Year
+  RegexpReplace "<[^>]+>" ""
+  SayUntil "."
+  # Date
+  #RegexpReplace "[^0-9]" ""
+  #SayRest
+endif
+
 
 # Genre
-OutputTo "Genre"
 FindLine "<dt>장르</dt>"
-MoveLine 1
-Unspace
+FindLine "<dd"
 RegexpReplace "<[^>]+>" ""
+Unspace
+IfNot "-"
+  OutputTo "Genre"
+endif
 SayRest
 
 # Lyrics
-FindLine "<div class=\"wrap_lyric\" id=\"lyricArea\">"
-MoveLine 1
-FindLine "<div"
+FindLine "section_lyric"
+FindLine "<div class=\"lyric"
 Unspace
-IfNot "<div class="lyric_none">"
+If "<div class=\"lyric\""
+  JoinUntil "</div>"
+  RegexpReplace "<br>" "\r\n"
+  RegexpReplace "<[^>]+>" ""
   OutputTo "Unsyncedlyrics"
-  MoveLine 1
-  RegexpReplace "<[^>]+>" "\r\n"
   SayRest
 endif
 
-# Lyricist
-OutputTo "Lyricist"
-FindLine "작사가 정보"
-MoveLine 3
+FindLine "<!-- 작사 / 작곡"
+MoveLine 2
 Unspace
-If "<li"
-  Do
-    FindLine "<span class=\"type\">작사"
-    MoveLine -4
-    FindLine "<div class=\"ellipsis artist"
-    FindLine "melon.link.goArtistDetail"
-    RegexpReplace "<[^>]+>" ""
-    SayRest
-    FindLine "</li>"
-    MoveLine 2
-    Unspace
+IfNot "<!-- //작사 / 작곡"
+  MoveLine 7
+  Unspace
+  # Lyricist
+  IfNot "<!-- 작곡가 정보"
+  OutputTo "Lyricist"
+    Do
+      FindLine "li"
+      FindLine "작사"
+      MoveLine -3
+      RegexpReplace "<[^>]+>" ""
+      Unspace
+      SayRest
+      
+      FindLine "</li>"
+      MoveLine 2
+      Unspace
+      If "<li>"
+        Say ", "
+      endif
+    While "<li>"
+  endif
 
-    If "<li>"
-      Say ", "
-    endif
-  While "<li>"
-else
-  MoveLine -3
-endif
+  # Composer
+  FindLine "<!-- 작곡가 정보"
+  Unspace
+  If "<!-- 작곡가 정보"
+    OutputTo "Composer"
+    Do
+      FindLine "li"
+      FindLine "작곡"
+      MoveLine -3
+      RegexpReplace "<[^>]+>" ""
+      Unspace
+      SayRest
 
-# Composer
-OutputTo "Composer"
-FindLine "작곡가 정보"
-MoveLine 3
-Unspace
-If "<li"
-  Do
-    FindLine "<span class=\"type\">작곡"
-    MoveLine -4
-    FindLine "<div class=\"ellipsis artist"
-    FindLine "melon.link.goArtistDetail"
-    RegexpReplace "<[^>]+>" ""
-    SayRest
-    FindLine "</li>"
-    MoveLine 2
-    Unspace
-
-    If "<li>"
-      Say ", "
-    endif
-  While "<li>"
-else
-  MoveLine -3
+      FindLine "</li>"
+      MoveLine 2
+      Unspace
+      If "<li>"
+        Say ", "
+      endif
+    While "<li>"
+  endif
 endif
