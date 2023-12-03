@@ -1,0 +1,13 @@
+{
+	"key": "Melon",
+	"title": "Melon Web Source Settings",
+	"settings": [
+	{
+		"type": "bool",
+		"key": "useDate",
+		"title": "발매일 사용(20220101로 출력)",
+		"description": "해제할 경우 발매연도로 출력됩니다",
+		"default": false
+	}
+	]
+}
