@@ -91,7 +91,7 @@ Unspace
 OutputTo "Title"
 SayRest
 
-# AlbumArtist/Multiple Artists/Various Artists
+# Artist/Multiple Artists/Various Artists
 FindLine "artist"
 JoinUntil "</div>"
 RegexpReplace "<[^>]+>" ""
