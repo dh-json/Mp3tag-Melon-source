@@ -1,4 +1,4 @@
-[Include]=Melon#.inc
+[Include]=&Melon#.inc
 [IndexUrl]=https://www.melon.com/search/album/index.htm?section=all&searchGnbYn=Y&kkoSpl=N&kkoDpType=&q=
 [AlbumUrl]=https://www.melon.com/album/detail.htm?albumId=
 [IndexFormat]=%_url%|%_preview%|%Album%|%Artist%|%Title%|%Released%|%Tracks%
@@ -114,14 +114,16 @@ SayRest
 FindLine "<dt>발매일</dt>"
 FindLine "<dd"
 Unspace
+# Year
 IfNot "-"
   OutputTo "Year"
-  # Year
-  RegexpReplace "<[^>]+>" ""
-  SayUntil "."
-  # Date
-  #RegexpReplace "[^0-9]" ""
-  #SayRest
+  IfVar "useDate" "false"
+    RegexpReplace "<[^>]+>" ""
+    SayUntil "."
+  else
+    RegexpReplace "[^0-9]" ""
+    SayRest
+  endif
 endif
 
 # Publisher

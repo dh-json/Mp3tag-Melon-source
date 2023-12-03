@@ -1,8 +1,8 @@
-[Include]=Melon#.inc
-[IndexUrl]=https://www.melon.com/search/song/index.htm?section=all&searchGnbYn=Y&kkoSpl=&kkoDpType=&q=
+[Include]=&Melon#.inc
+[IndexUrl]=https://www.melon.com/search/song/index.htm?section=song&searchGnbYn=Y&kkoSpl=N&kkoDpType=&sort=date&q=
 [AlbumUrl]=https://www.melon.com/song/detail.htm?songId=
 [IndexFormat]=%_url%|%Title%|%Artist%|%_preview%|%Album%
-[SearchBy]=Title||%title%||%s||Artist||%artist%||+%s
+[SearchBy]=Title||%title%||%s
 
 [ParserScriptIndex]=...
 # ###################################################################
@@ -109,16 +109,17 @@ SayRest
 FindLine "<dt>발매일</dt>"
 FindLine "<dd"
 Unspace
+# Year
 IfNot "-"
   OutputTo "Year"
-  # Year
-  RegexpReplace "<[^>]+>" ""
-  SayUntil "."
-  # Date
-  #RegexpReplace "[^0-9]" ""
-  #SayRest
+  IfVar "useDate" "false"
+    RegexpReplace "<[^>]+>" ""
+    SayUntil "."
+  else
+    RegexpReplace "[^0-9]" ""
+    SayRest
+  endif
 endif
-
 
 # Genre
 FindLine "<dt>장르</dt>"
@@ -127,8 +128,8 @@ RegexpReplace "<[^>]+>" ""
 Unspace
 IfNot "-"
   OutputTo "Genre"
+  SayRest
 endif
-SayRest
 
 # Lyrics
 FindLine "section_lyric"
@@ -148,9 +149,9 @@ Unspace
 IfNot "<!-- //작사 / 작곡"
   MoveLine 7
   Unspace
-  # Lyricist
+  # Lyricist/Multiple Lyricists 
   IfNot "<!-- 작곡가 정보"
-  OutputTo "Lyricist"
+    OutputTo "Lyricist"
     Do
       FindLine "li"
       FindLine "작사"
@@ -168,7 +169,7 @@ IfNot "<!-- //작사 / 작곡"
     While "<li>"
   endif
 
-  # Composer
+  # Composer/Multiple Composers
   FindLine "<!-- 작곡가 정보"
   Unspace
   If "<!-- 작곡가 정보"
