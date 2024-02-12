@@ -156,7 +156,7 @@ Do
   # Title
   FindLine "wrap_song_info"
   JoinUntil "</div>"
-  Replace "<span class=\"none\">Title</span>" ""
+  RegexpReplace "<span class=\"none\">(Title|HOT|19금)</span>" ""
   RegexpReplace "<[^>]+>" ""
   Unspace
   OutputTo "titleTemp"
