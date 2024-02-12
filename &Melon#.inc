@@ -7,3 +7,5 @@
 [WordSeparator]=+
 [Encoding]=url-utf-8
 [Settings]=&Melon#s. 설정.settings
+[MinAppVersionMac]=1.8.2
+[MinAppVersionWin]=3.22
