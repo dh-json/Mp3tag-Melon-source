@@ -137,7 +137,7 @@ FindLine "<div class=\"lyric"
 Unspace
 If "<div class=\"lyric\""
   JoinUntil "</div>"
-  RegexpReplace "<br>" "\r\n"
+  RegexpReplace "<[bB][rR]>" "\r\n"
   RegexpReplace "<[^>]+>" ""
   OutputTo "Unsyncedlyrics"
   SayRest
